@@ -1,0 +1,118 @@
+/* app css stylesheet */
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+/*
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid green;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+*/
+#header {
+   position:relative;
+   min-height:15%;
+   overflow:visible;
+}
+#viewport{
+  position:relative;
+   display:block;
+   min-height:80%;
+   width:100%;
+   overflow:auto;
+   margin:10px;
+   
+}
+ html, body {
+    height:100%;
+    
+}
+#footer{
+    display:block;
+    height:3%;
+    width:100%;
+    text-align: center;
+    
+}
+.panel{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    padding:5px;
+}
+
+.newActivity {
+    width:100px;
+    padding:2px; 
+    margin-bottom:100px;
+    vertical-align: top;
+}
+
+
+.panel-heading{  
+    background-color: #000;  
+    padding:5px;
+    margin: 0x;  
+}  
+
+#activityDetails tr:nth-child(odd) {
+  background-color: #def;
+}
+#activityDetails tr:nth-child(even) {
+  background-color: #fff;
+}
+#activityDetails tr:hover {
+    background-color: #D2DEE8 !important;
+}
+
+ .ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+ }
+ 
+ .animation.ng-enter,
+.animation.ng-leave{
+  -webkit-transition: 0.5s;
+}
+
+.animation.ng-enter {
+  opacity: 0;
+}
+
+.animation.ng-leave {
+  opacity: 1;
+}
+
+.animation.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.animation.ng-leave.ng-leave-active {
+  opacity: 0;
+}

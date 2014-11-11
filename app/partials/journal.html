@@ -1,0 +1,14 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h3><strong>Add Journal Entry</strong> </h3></div>
+
+    <div class='panel-body'> 
+  
+        <form name='journalForm' ng-model='journalForm' ng-submit='postJournal(journalForm.$valid)'>
+            <label>Activity Name</label><input class="form-control" ng-model="title" size="100" required>
+            <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-disabled='enabled' required>xxx</div>
+            <small><i>*It is advisable to start with a lead in paragraph</i></small><br/>
+            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="journalForm.$invalid">Submit</button><br/>
+        </form>
+    </div>
+ </div>       

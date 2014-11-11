@@ -1,0 +1,150 @@
+
+<div class="panel panel-default">
+    <label class="lead">Data Services</label>
+
+   <!--   begin -->
+   <!-- Button trigger modal -->
+    <div class="panel panel-default">
+       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newDataService">
+          New Data Service
+        </button> 
+        &nbsp;&nbsp;Search&nbsp;&nbsp;<input type="text" ng-model="dsFilter" placeholder="Search Filter"/>&nbsp;<i style="font-size:11px">Search for any text or tags in the data service</i>
+    </div>
+
+   <!-- Modal -->
+    <div class="modal fade" id="newDataService" tabindex="-1" role="dialog" aria-labelledby="newDataServiceLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="newProductLabel">Add Data Service</h4>
+          </div>
+          <div class="modal-body" style="width:100%">
+         <div ng-hide="!addDataServiceError" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> There was a problem adding new data service. Please try again.
+         </div>
+            <form name="formData" class="navbar-form " role="addModel" ng-model="formData"  novalidate>
+                <div class="form-group" style="width:100%">
+                <table  cellpadding="50px" cellspacing="12px" style="width:100%">
+                    <tr><td class="newActivity" style="width:45%" colspan="2"><label><h3>Data Service Details</h3></label></td></tr>
+                    <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="formData._id" required></td></tr>
+                    <tr><td class="newActivity"><label>Description</label></td><td><input class="form-control" ng-model="formData.description" required></td></tr>
+                    <tr><td class="newActivity"><label>Type</label></td><td>
+                            <input class="form-control" type="radio" ng-model="formData.servicetype" value="Attribute" selected required>Attribute
+                            <input class="form-control" type="radio" ng-model="formData.servicetype" value="SOAPCALL" required>SOAPCALL
+                    </td></tr>
+                    <tr><td class="newActivity"><label>Service or Attribute Name</label></td><td><input class="form-control" ng-model="formData.servicename" required></td></tr>
+                    <tr><td class="newActivity"><label>Request Layout</label></td><td><input class="form-control" ng-model="formData.requestlayout" required></td></tr>
+                    <tr><td class="newActivity"><label>Response Layout</label></td><td><input class="form-control" ng-model="formData.responselayout" required></td></tr>
+                    
+                </table>
+                </div>
+            </form>              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="createDataService(formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Service</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end -->
+            
+
+    <!-- begin List of data services. Use collapsible panels and make it editable-->
+    <div class="panel-group" id="accordion" ng-repeat='ds in dataservices | filter:dsFilter'>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse_{{ds._id}}">
+                <small><span class='badge badge-success'>{{$index + 1}}</span></small> {{ds._id}} {{ds.description}}
+            </a>
+          </h4>
+        </div>
+        <div id="collapse_{{ds._id}}" class="panel-collapse collapse ">
+          <div class="panel-body">
+              <!-- table>
+                  <tr><td> <label class="title">Description: </label></td><td>{{ds.description}}</td></tr>
+                  <tr><td> <label class="title">Type: </label></td><td>{{ds.servicetype}}</td></tr>
+                  <tr><td> <label class="title">Service Name: </label></td><td>{{ds.servicename}}</td></tr>
+                  <tr><td> <label class="title">Request Layout: </label></td><td>{{ds.requestlayout}}</td></tr>
+                  <tr><td> <label class="title">Response Layout: </label></td><td>{{ds.responselayout}}</td></tr>
+                  
+              </table -->
+              
+              
+            <form editable-form name="formData" class="navbar-form " role="editProduct" ng-model="ds" onaftersave="updateDataService(ds)"    novalidate>
+                <div class="form-group" style="width:100%">
+                    <div>
+                        <label class="title">Product ID: </label>
+                        <span>{{ ds._id|| 'required' }}</span>
+                    </div>  
+                    <div>
+                        <label class="title">Description: </label>
+                        <span editable-text="ds.description" onbeforesave="" e-required>{{ ds.description || 'required' }}</span>
+                    </div>  
+                    <div>
+                        <label class="title">Service Type: </label>
+                        <span href="#" editable-radiolist="ds.servicetype" e-ng-options="s.value as s.text for s in serviceTypes">
+                                {{ ds.servicetype }} 
+                        </span>
+                    </div>  
+                     <div>
+                        <label class="title">Service or Attribute Name: </label>
+                        <span editable-text="ds.servicename" onbeforesave="" e-required>{{ ds.servicename}}</span>
+                    </div>  
+                     <div>
+                        <label class="title">Request Layout: </label>
+                        <span editable-text="ds.requestlayout" onbeforesave="" e-required>{{ ds.requestlayout || 'required' }}</span>
+                    </div>  
+                     <div>
+                        <label class="title">Response Layout: </label>
+                        <span editable-text="ds.responselayout" onbeforesave="" e-required>{{ ds.responselayout || 'required' }}</span>
+                    </div>  
+          
+                    
+                
+                    <span ng-show="formData.$visible">
+                        <button type="submit" class="btn btn-primary" ng-disabled="formData.$waiting">Save</button>
+                        <button type="button" class="btn btn-default" ng-disabled="formData.$waiting" ng-click="formData.$cancel()">Cancel</button>
+                    </span>   
+                    <div>
+                        <button type="button" class="btn btn-default" ng-click="formData.$show()" ng-show="!formData.$visible">Edit</button>
+                    </div>    
+
+                </div>
+            </form>     
+              
+              
+          </div>
+        </div>
+      </div>
+      
+        
+       
+        
+    </div>
+ <!-- end -->
+<!-- div class="container-fluid">
+  <div class="row-fluid" ng-repeat="model in models">
+      <div class="offset1 span8 pull-left">
+
+        <div ng-class="{ 'Non-FCRA': 'panel panel-info', 'FCRA':'panel panel-danger'}[model.classification]">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{model._id}} <small>[{{model.classification}}]</small>&nbsp;&nbsp;<a href='#/models/find/{{model._id}}'><span class="glyphicon glyphicon-search" </span> </a></h3> 
+            </div>
+            <div class="panel-body">
+              {{model.description}}
+            </div>
+        </div>   
+      </div>     
+    </div>
+  </div -->
+ 
+   
+   
+   
+   
+   
+</div>       

@@ -1,0 +1,24 @@
+
+<div class="panel panel-default">
+    <label class="lead">Latest diary entries</label>
+
+    <div class='panel-body' > 
+        
+        <ul class='list-group' ng-repeat= 'journal in journals'>
+            <li class='list-group-item' style="box-shadow: 3px 3px 3px #888888;">
+                <div id="journal_{{journal._id}}">
+                    <div>
+                        <h2>{{journal.title}}</h2><small>posted on {{journal.createdDate | date:'MM-dd-yyyy'}}</small>
+                        <span class="glyphicon glyphicon-print" ng-click="printDiv('journal_' +journal._id)"></span>
+                    </div>
+                   <hr/> 
+                   <div ng-bind-html='journal.body'></div>
+                </div>   
+            </li>       
+                  
+        </ul>
+            
+            
+            
+    </div>
+</div>       

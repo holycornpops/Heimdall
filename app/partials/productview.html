@@ -1,0 +1,232 @@
+
+<div class="panel panel-default">
+    <label class="lead">Product Information</label>
+    <table style="width:100%">
+        <tr>
+            <td style="width:40%">
+            <!--   begin product section form -->
+            <form editable-form name="formData" class="navbar-form " role="editProduct" ng-model="product" onaftersave="updateProduct(product)"    novalidate>
+                <div class="form-group" style="width:100%">
+                    <div>
+                        <label class="title">Product ID: </label>
+                        <span>{{ product._id|| 'required' }}</span>
+                    </div>  
+                    <div>
+                        <label class="title">Name: </label>
+                        <span editable-text="product.name" onbeforesave="" e-required>{{ product.name || 'required' }}</span>
+                    </div>  
+                    <div>
+                        <label class="title">Description: </label>
+                        <span editable-text="product.description" onbeforesave="" e-required>{{ product.description || 'required' }}</span>
+                    </div>  
+                    <div>
+                        <label class="title">Project Type: </label>
+                        <span editable-radiolist="product.projectType" e-ng-options="s.value as s.text for s in projectTypes">
+                                {{ showProjectTypes() }}
+                        </span>
+                    </div>  
+                    <div>
+                        <label class="title">Tags: </label>
+                        <span editable-text="product.tags" onbeforesave="" e-required>{{ product.tags || 'required' }}</span>
+                    </div>  
+
+                    <span ng-show="formData.$visible">
+                        <button type="submit" class="btn btn-primary" ng-disabled="formData.$waiting">Save</button>
+                        <button type="button" class="btn btn-default" ng-disabled="formData.$waiting" ng-click="formData.$cancel()">Cancel</button>
+                    </span>   
+                    <div>
+                        <button type="button" class="btn btn-default" ng-click="formData.$show()" ng-show="!formData.$visible">Edit</button>
+                    </div>    
+
+                </div>
+            </form>     
+            <!--   end product section form -->
+   
+            </td>
+            <td  style="width:30%"> <div id="activitytypediv" style="border:thin solid black"></div>  </td>
+            <td  style="width:30%;vertical-align:text-top"> 
+                <!-- Last Fiver Activities -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Last Five Entries</div>
+                          <!-- List group -->
+                    <ul class="list-group" ng-repeat="activity in lastfiveactivities">
+                        <li class="list-group-item">
+                            <small>
+                                <a href="#/activities/find/{{activity._id}}">{{activity.type}}:{{activity.activityName}}</a>
+                                <span ng-show="activity.status === 'NEW'" class="badge alert-success" style="font-size:8px">New!</span>
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- End Last Fiver Activities -->
+            </td>
+        </tr>
+        
+    </table>    
+
+    <hr/>
+   
+    
+    
+    <!-- begin models section-->
+    <label class="lead">Models</label>
+    <small class="text-muted"> All models used by this product for scoring or attribute generation</small>
+    <div class="container-fluid" >
+            <div class="row-fluid">
+                <div class="offset1 span8 pull-left" ng-repeat="model in productmodels">
+                     <div class = "panel panel-default">
+                        <table><tr>
+                            <td style="width:250px">
+                                <address style="margin-top:2px; margin-bottom:25px; margin-left:8px">
+                                    <div><strong><a href='#/models/find/{{model._id}}'>{{model._id}}</a></strong></div>
+                                    <div><small>{{model.type}} Model [{{model.classification}}]</small></div>
+                                    <div style = "border-top: thin solid lightgray"><small>{{model.description}}</small></div>
+                                    <!-- span ng-show="actor.role != 'None' " class="badge alert-success">{{actor.role}}</span -->
+                                </address> 
+                            </td>
+                         </tr></table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    
+    <!-- models end -->
+
+    <hr/>
+    
+      <!-- Assigned services --> 
+    <div ng-show="!showAllServices">
+        <label class="lead">Data Services</label>
+        <small class="text-muted"> External data services used by this product</small>
+        <table  class='table  table-striped'>
+            <tr ng-repeat='ds in assignedservices'>
+                <td>{{ds._id}}</td><td>{{ds.description}}</td>
+            </tr>
+        </table>
+        <div>
+            <button type="button" class="btn btn-default" ng-click="showAllServicesForEdit()">Edit</button>
+        </div>    
+
+    </div> 
+    <!-- end assigned services -->
+
+    <!-- All services --> 
+    <div ng-show="showAllServices">
+        <label class="lead">All External Data Services </label>
+        <table  class='table'>
+            <!-- tr><td><input type='checkbox'  ng-click="setService('{{ds._id}}')"> {{ds._id}}</td -->
+            <tr ng-repeat='ds in servicesMatrix'>
+                <td><input type="checkbox" name="as"  value="{{ds.selected}}"   ng-model="ds.selected" ></td> 
+                <td>{{ds._id}}</td><td>{{ds.description}}</td>
+            </tr>
+        </table>
+        <span>
+            <br>
+            <button type="submit" class="btn btn-primary" ng-click="saveServiceChanges()">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="hideAllServices()">Cancel</button>
+        </span>   
+    </div> 
+    <!-- end all services -->
+
+    
+    <hr/>
+    <!-- Assigned actors --> 
+    <div ng-show="!showAllActors">
+        <label class="lead">Product Actors</label>
+        <small class="text-muted"> People involved with this product</small>
+
+        <div class="container-fluid" >
+            <div class="row-fluid">
+                <div class="col-xs-12 col-md-3" ng-repeat="actor in productusers">
+                <!-- div style="cursor:pointer" ng-click="toggleActorInAssignedList(actor._id)" -->
+                    <div class = "panel panel-default">
+                        <table><tr>
+                            <td>
+                                <div style="margin-top:2px;box-shadow: 3px 3px 3px #888888;height:60px; width:60px">
+                                    <img src="img/users/{{actor.imagename}}"  style="width:60px;height:60px"  />
+                                </div>
+                            </td>
+                            <td style="width:250px">
+                                <address style="margin-top:2px; margin-bottom:25px; margin-left:8px">
+                                    <strong>{{actor.name}} </strong><br>
+                                    <small><a href="mailto:{{actor.email}}">{{actor.email}}</a> </small><br>
+                                    <span ng-show="actor.role != 'None' " class="badge alert-success">{{actor.role}}</span>
+                                </address> 
+                            </td>
+                         </tr></table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" ng-click="showAllActorsForEdit()">Edit</button>
+        </div>    
+
+    </div> 
+    <!-- end assigned actors -->
+
+    <!-- All actors --> 
+    <div ng-show="showAllActors">
+        <label class="lead">All Actors</label>
+        <div class="container-fluid" ng-repeat="actor in actorMatrix">
+            <div class="row-fluid">
+                <div style="cursor:pointer">
+                    <table><tr>
+                        <td>
+                            <div style="margin-top:2px;box-shadow: 3px 3px 3px #888888;height:45px; width:45px">
+                                <img src="img/users/{{actor.imagename}}"  style="width:45px;height:45px"  />
+                            </div>
+                        </td>
+                        <td style="width:200px">
+                            <address style="margin-top:2px; margin-bottom:25px; margin-left:8px">
+                                <strong>{{actor.name}} </strong><br>
+                                <span ng-show="actor.role != 'None' " class="badge alert-success">{{actor.role}}</span>
+                            </address> 
+                        </td>
+                        <td style="vertical-align:text-top">
+                                <small>assign role</small>
+                                <select ng-model='selectedRole' id="actorRole_{{actor._id}}" ng-change="assignRoleToActor('{{actor._id}}', '{{selectedRole}}')">
+                                    <!-- option ng-repeat="actorRole in actorRoles" value="{{actorRole.role}}" ng-selected="actorRole.role===findActorRoleByProductId('{{product._id}}')">{{actorRole.text}}</option -->   
+                                    <option ng-repeat="actorRole in actorRoles" value="{{actorRole.role}}" ng-selected="actorRole.role===actor.role">{{actorRole.text}}</option>   
+                                </select>
+                        </td>
+                     </tr></table>
+                </div>    
+            </div>
+        </div>
+        <span>
+            <br>
+            <button type="submit" class="btn btn-primary" ng-click="saveChanges()">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="hideAllActors()">Cancel</button>
+        </span>   
+    </div> 
+    <!-- end all actors -->
+
+
+
+
+    <!-- begin resource section-->
+    <hr/>
+    <label class="lead">Resources</label>
+    <small class="text-muted"> Documents and resources attached to this product</small>
+    <div class="panel-body">
+         <table class="table table-striped">
+             <tr ng-repeat="resource in resources">
+                 <td><a href="resource/{{resource._id}}">{{resource._id}}</a></td>
+                 <td>{{resource.description}}</td>
+                 <td>{{resource.type}}</td>
+                 <td>{{resource.size}}</td>
+             </tr>    
+         </table>    
+     </div >
+    
+    
+    
+    <!-- resources end -->
+
+
+
+   
+   
+</div>       

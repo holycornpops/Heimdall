@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" ng-app="Heimdall">
+<head>
+  <meta charset="utf-8">
+  <title>Project Heimdall</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <script src="js/jquery-2.1.0.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <link rel="stylesheet" href="lib/angular/xeditable.css"/>
+  <link rel='stylesheet prefetch' href='css/font-awesome.min.css'>
+  <link rel="stylesheet" href="css/app.css"/>
+   <script type="text/javascript" src="https://www.google.com/jsapi"></script>   
+  
+</head>
+<body>
+    <div id="header"> 
+        <table><tr>
+            <td><img src="img/images.LN_horizontal_4color_print.png" /></td>
+            <td><img src="img/heimdall.png" /><td>
+        </tr></table>
+        <div class="btn-group">
+            <a href="#/"><button type="button" class="btn btn-info btn-sm " >
+              Home 
+                </button></a>
+        </div>  
+    
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+              Products <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#/products">All Products</a></li>
+              <li><a href="#/models">Models</a></li>
+              <li class="divider"></li>
+              <li><a href="#/resources">Resources</a></li>
+              <li><a href="#/dataservices">Data Services</a></li>
+            </ul>
+        </div>  
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning btn-sm dropdown-toggle open" data-toggle="dropdown">
+               Activities <span class="caret"></span>
+             </button>
+             <ul class="dropdown-menu" role="menu">
+               <li><a href="#/activities">All Activites</a></li>
+               <li><a href="#">Completed Activities</a></li>
+               <li class="divider"></li>
+               <li><a href="#/journal/new">Add journal entry</a></li>
+               <li><a href="#/journal">Read journals</a></li>               
+             </ul>    
+       </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+              Actors <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#/users">All Actors</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>  
+ 
+        <!-- ul class="menu">
+           <li><a href="#/view1">view1</a></li>
+           <li><a href="#/activities">view2a</a></li>
+         </ul  -->
+    </div>        
+    <div id="viewport"> 
+      <div ng-view></div>
+    </div>
+
+<div id="footer">Angular seed app: v<span app-version></span></div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/angular/ui-bootstrap.js"></script>
+  <script src="lib/ng-flow.min.js"></script>
+  <script src="lib/ng-flow-standalone.js"></script>
+  <script src="lib/angular/xeditable.min.js"></script>
+  <script src="lib/angular/angular-animate.min.js"></script>
+  
+
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/controller.home.js"></script>
+  <script src="js/controller.activities.js"></script>
+  <script src="js/controller.users.js"></script>
+  <script src="js/controller.journals.js"></script>
+  <script src="js/controller.products.js"></script>
+  <script src="js/controller.productview.js"></script>
+  <script src="js/controller.models.js"></script>
+  <script src="js/controller.modelview.js"></script>
+  <script src="js/controller.resources.js"></script>
+  <script src="js/controller.dataservices.js"></script>
+  <!-- script src="js/controller.users_update.js"></script -->
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/app.js"></script>
+  <script src="lib/socket.io.js"></script>
+  <script src="lib/angular/textAngular.js"></script>
+  <script src="lib/angular/textAngular-sanitize.min.js"></script>
+  <script src="lib/angular/angular-file-upload-shim.min.js"></script> 
+  <script src="lib/angular/angular-file-upload.min.js"></script> 
+
+</body>
+</html>

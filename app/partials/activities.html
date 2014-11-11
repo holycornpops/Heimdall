@@ -1,0 +1,235 @@
+<div class="panel panel-default">
+    <label class="lead">Activities</label><hr/>
+
+    
+   <!--   begin -->
+   <!-- Button trigger modal -->
+<div class="panel panel-default">
+ 
+   <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newActivity">
+      New Activity
+    </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="newActivity" tabindex="-1" role="dialog" aria-labelledby="newActivityLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="newActivityLabel">New Activity</h4>
+      </div>
+      <div class="modal-body">
+     <div ng-hide="!addActivityError" class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Warning!</strong> There was a problem new activity. Please try again.
+     </div>
+       
+   <form name="formData" class="navbar-form" role="addActivity" ng-model="formData" ng-submit="createActivity(formData.$valid)" novalidate>
+                        <div class="form-group">
+                            <table  cellpadding="50px" cellspacing="12px">
+                                <tr><td class="newActivity"><label>Activity Name</label></td><td><input class="form-control" ng-model="formData.activityName" size="50" required></td></tr>
+                                <tr><td class="newActivity"><label>Activity Type</label></td>
+                                    <td>
+                                        <select ng-model="formData.type"  required>
+                                            <option ng-repeat="ActivityType in ActivityTypes" value="{{ActivityType.type}}">{{ActivityType.type}}</option>    
+                                        </select>
+                                    </td> </tr>
+                                <tr><td class="newActivity">
+                                        <label>Product</label></td><td><!-- input class="form-control"  ng-model="formData.product" size="50" required -->
+                                        
+                                        <select ng-model='formData.product' required>
+                                            <option ng-repeat="product in allproducts" value="{{product._id}}" >{{product.name}}</option>   
+                                        </select>
+                                        
+                                </td></tr>
+                                <tr><td class="newActivity"><label>Detail</label><td><textarea wrap = "hard" rows="4" cols="55" class="form-control"  ng-model="formData.detail" placeholder="Enter details here" required></textarea></td></tr>
+                                <tr><td class="newActivity"><label>Created By</label></td><td>
+                                        <select ng-model="formData.createdBy"  required>
+                                            <option ng-repeat="user in users" value="{{user._id}}">{{user.name}}</option>    
+                                        </select>
+                                    </td></tr>
+                                <tr><td class="newActivity"><label>Target Completion Date</label></td>
+                                    <td><input type="text"  style="width:170px" datepicker-popup="{{dateFormat}}"  ng-model="formData.targetDate" is-open="opened" min="minDate" max="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" /></td>
+                                </tr>       
+                                <tr>
+                                    <td class="newActivity"><label>Difficulty</label></td>
+                                    <td><div  ng-init="x = 1" style="vertical-align:top"><rating  value="x" min="1" max="5" style="font-size:18px;color:maroon" ng-model='formData.rating' ></rating>({{x}})</div></td>
+                                    <td><a href=""><span class="glyphicon glyphicon-question-sign" tooltip-placement="right" tooltip="1 being easy, 5 being difficult"></span></a> </td>
+                                </tr>
+                                <tr>
+                                    <td class="newActivity"><label>Tags</label></td>
+                                    <td><input class="form-control" type="text"  size="50" ng-model="formData.tags" required/></td>
+                                    <td><a href=""><span class="glyphicon glyphicon-question-sign" tooltip-placement="right" tooltip="Use hashtags to easily search for topics"></span></a> </td>
+                                </tr>
+                            </table>
+                            <!--  button type="submit" class="btn btn-primary btn-sm" ng-disabled="formData.$invalid" ><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Activity</button -->
+                        </div>
+                    </form>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="createActivity(formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Activity</button>
+      </div>
+    </div>
+  </div>
+</div>
+   <!-- end -->
+    
+    <!-- div class="panel-heading"><h3><strong>Activities</strong> </h3>
+            <span ng-repeat="activitycount in activitycounts" class="badge"> {{activitycount._id}} {{activitycount.type}}</span></h3></div>
+    <table><tr>
+            <td style="width:50%">        
+                <div class="panel-body">
+                    <!-- form name="formData" class="navbar-form navbar-left" role="addActivity" ng-model="formData" ng-submit="createActivity(formData.$valid)" novalidate>
+                        <div class="form-group">
+                            <table  cellpadding="50px" cellspacing="12px">
+                                <tr><td class="newActivity"><label>Activity Name</label></td><td><input class="form-control" ng-model="formData.activityName" size="50" required></td></tr>
+                                <tr><td class="newActivity"><label>Activity Type</label></td>
+                                    <td>
+                                        <select ng-model="formData.type"  required>
+                                            <option ng-repeat="ActivityType in ActivityTypes" value="{{ActivityType.type}}">{{ActivityType.type}}</option>    
+                                        </select>
+                                    </td> </tr>
+                                <tr><td class="newActivity"><label>Product</label></td><td><input class="form-control"  ng-model="formData.product" size="50" required></td></tr>
+                                <tr><td class="newActivity"><label>Detail</label><td><textarea wrap = "hard" rows="4" cols="55" class="form-control"  ng-model="formData.detail" placeholder="Enter details here" required></textarea></td></tr>
+                                <tr><td class="newActivity"><label>Created By</label></td><td>
+                                        <select ng-model="formData.createdBy"  required>
+                                            <option ng-repeat="user in users" value="{{user._id}}">{{user.name}}</option>    
+                                        </select>
+                                    </td></tr>
+                                <tr><td class="newActivity"><label>Target Completion Date</label></td>
+                                    <td><input type="text"  style="width:170px" datepicker-popup="{{dateFormat}}"  ng-model="formData.targetDate" is-open="opened" min="minDate" max="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" /></td>
+                                </tr>       
+                                <tr>
+                                    <td class="newActivity"><label>Difficulty</label></td>
+                                    <td><div  ng-init="x = 1" style="vertical-align:top"><rating  value="x" min="1" max="5" style="font-size:18px;color:maroon" ng-model='formData.rating' ></rating>({{x}})</div></td>
+                                    <td><a href=""><span class="glyphicon glyphicon-question-sign" tooltip-placement="right" tooltip="1 being easy, 5 being difficult"></span></a> </td>
+                                </tr>
+                                <tr>
+                                    <td class="newActivity"><label>Tags</label></td>
+                                    <td><input class="form-control" type="text"  size="50" ng-model="formData.tags" required/></td>
+                                    <td><a href=""><span class="glyphicon glyphicon-question-sign" tooltip-placement="right" tooltip="Use hashtags to easily search for topics"></span></a> </td>
+                                </tr>
+                            </table>
+                            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="formData.$invalid" ><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Activity</button>
+                        </div>
+                    </form>
+                </div>
+            </td>
+            <td style="width:50%">
+
+                <div id="chartdiv"></div> 
+
+            </td>
+        </tr></table>    
+    <!-- table border='1'>
+      <thead>
+          <tr>
+              <th>Id</th><th>Activity Name</th><th>Type</th><th>Activity Detail</th><th>Status</th><th>Date</th><th></th>
+          </tr>  
+      </thead> 
+      <tbody>
+          <tr ng-repeat="activity in activities"> 
+              <td>{{ activity._id}}</td><td>{{ activity.activityName}}</td><td>{{ activity.type}}</td><td>{{ activity.detail}}</td><td>{{ activity.status}}</td><td>{{ activity.createDate | date:'MM-dd-yyyy'}}</td><td><span class="glyphicon glyphicon-remove"></span></td>
+          </tr>
+      </tbody>a
+    </table>
+</div -->
+<div class="panel panel-default">
+    Search&nbsp;&nbsp;<input type="text" ng-model="activityFilter" placeholder="Search Filter"/>&nbsp;<i style="font-size:11px">Search for any text or tags in the document</i>
+                <span ng-repeat="activitycount in activitycounts" class="badge"> {{activitycount._id}} {{activitycount.type}}</span></h3>
+
+</div>
+
+
+    
+         <accordion close-others="oneAtATime">
+            <accordion-group ng-repeat="activity in activities| filter:activityFilter" >
+                <accordion-heading>
+                    <h5>
+                        <strong>{{activity._id}} : {{activity.activityName}}</strong>&nbsp;&nbsp;
+                        <span ng-show="activity.status === 'CLOSED'" class="badge " style="font-size:12px">Closed</span> 
+                        <span ng-show="activity.type === 'Bug'" class="badge alert-danger" style="font-size:12px">Bug</span> 
+                        <span ng-show="activity.type === 'Task'" class="badge alert-warning" style="font-size:12px">Task</span> 
+                        <span ng-show="activity.type === 'Feature'" class="badge alert-info" style="font-size:12px">Feature</span> 
+                        <span ng-show="activity.status === 'NEW'" class="badge alert-success" style="font-size:12px">New!</span> 
+                        <span ng-show="activity.status != 'NEW'" class="badge alert-success" style="font-size:12px">Assigned to {{activity.assignedTo}}</span> 
+                        <span ng-show="isDateDue(activity.targetDate) && activity.status != 'CLOSED'" class="badge alert-danger" style="font-size:12px">Due on {{activity.targetDate | date:'MMM d, yyyy' }} </span>
+                        <span ng-show="activity.status == 'CLOSED' || (activity.targetDate != null && !isDateDue(activity.targetDate))" class="badge alert-warning" style="font-size:12px">Due on {{activity.targetDate | date:'MMM d, yyyy' }} </span>
+                        
+                    </h5>
+
+                </accordion-heading>
+                <div class="well">  
+                    <form name="activityForm" ng-model="activityForm" ng-submit="updateActivity(activity)" >    
+                        <!-- label>Activity  {{activity._id}}&nbsp;&nbsp;<i>created on {{activity.createDate}}</i> by <i>{{activity.createdBy}}</i></label><br/ -->
+                        <div class="row">       
+                            <label>Status </label> 
+                            <select  ng-model="activity.status">
+                                <option ng-repeat="StatusType in StatusTypes" value="{{StatusType.type}}" ng-selected="activity.status === StatusType.type">{{StatusType.type}}</option>    
+                            </select>&nbsp;&nbsp; 
+
+
+                            <label>Type </label>
+                            <select  ng-model="activity.type">
+                                <option ng-repeat="ActivityType in ActivityTypes" value="{{ActivityType.type}}" ng-selected="activity.type === ActivityType.type">{{ActivityType.type}}</option>    
+                            </select>&nbsp;&nbsp; 
+
+                            <label ng-show="activity.status === 'ASSIGNED'">Assigned to </label>
+                            <select  ng-show="activity.status === 'ASSIGNED'" ng-model="activity.assignedTo"  required>
+                                <option ng-repeat="user in users" value="{{user._id}}" ng-selected="user._id === activity.assignedTo">{{user.name}}</option>    
+                            </select>&nbsp;&nbsp; 
+
+                            <label>Product </label>
+                            <select  ng-model="activity.product">
+                                <option ng-repeat="product in allproducts" value="{{product._id}}" ng-selected="activity.product === product._id">{{product.name}}</option>    
+                            </select>&nbsp;&nbsp; 
+                            
+                            <label>Target Date</label>
+
+                            <input type="text"  style="width:170px" datepicker-popup="{{dateFormat}}"  ng-model="activity.targetDate" is-open="opened" min="minDate" max="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+
+                            &nbsp;&nbsp; <label>Modified by </label>            
+                            <select ng-model="activity.createdBy"   required>
+                                <option ng-repeat="user in users" value="{{user._id}}" ng-selected="user._id === activity.createdBy">{{user.name}}</option>    
+                            </select> 
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Update</button><br/>
+                    </form>
+                    <div class='panel' >
+                        <table id="activityDetails" style="width:100%">
+                            <tr ng-show="true" class="panel panel-default animate-show" ng-repeat="detail in activity.details" >
+
+                                <td style="width:100px; vertical-align:top; padding:5px"> 
+                                    <div style="box-shadow: 3px 3px 3px #888888;height:60px; width:60px"><img ng-src="img/users/{{findUserName(detail.createdBy).imagename || 'noimage.jpg' }}" style="width:60px;height:60px"/></div>
+                                </td>
+                                <td>
+                                    <div><b>{{findUserName(detail.createdBy).name}}</b><i>&nbsp;&nbsp;<small>on {{detail.createdDate|  date:'EEEE, MMM d, yyyy h:mm a'}}</small></i></div>                            
+                                    <div style="overflow-x:auto; white-space: pre-line;margin-top:-3.00em; margin-bottom:0.00em">
+                                        <a href="" editable-textarea="detail.detail" wrap="hard" e-rows="4" e-cols="100" onaftersave="updateActivityDetail(detail)">
+                                            <h6 style="color:black">{{ detail.detail || 'no description' }}</h6>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- div ng-show="true" class="panel panel-default animate-show" ng-repeat="detail in activity.details">
+                            <img src="/api/users/avatar/{{detail.createdBy}}" style="width:60px;height:60px"/>&nbsp; by <b>{{findUserName(detail.createdBy) }}</b><i>  on {{detail.createdDate |  date:'EEEE, MMM d, yyyy h:m a'}}</i>
+                            <div class="panel-body" >
+                                {{detail.detail}}
+                            </div>
+                        </div -->
+
+                        <form name="activityDetailForm" ng-model="activityDetailForm" ng-submit="addActivityDetail(activity)" style="margin-top:10px; " >
+                            <textarea rows="4" cols="50" class="form-control" ng-init="" ng-model="activity.newDetail" placeholder="Add details here" required></textarea>  
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-top:10px;" ng-disabled="activityDetailForm.$invalid" >Add detail</button><br/>
+                        </form>
+                    </div>    
+                </div>
+            </accordion-group>
+        </accordion>
+</div>
+
+
+

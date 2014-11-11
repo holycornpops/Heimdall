@@ -1,0 +1,276 @@
+
+<div class="panel panel-default">
+    <label class="lead">Resources</label><hr/>
+    <div class="panel panel-default">
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addResource">
+            Add a document
+        </button>
+    </div>
+    <!-- Modal -->
+    <!-- div class="modal fade" id="newActor" tabindex="-1" role="dialog" aria-labelledby="newActorLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="newActorLabel">Add New Actor</h4>
+          </div>
+          <div class="modal-body">
+         <div ng-hide="!addActorError" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> There was a problem adding an actor. Please try again.
+         </div>
+            <form name="formData" class="navbar-form " role="addUser" ng-model="formData" " novalidate>
+                <div class="form-group">
+                <table  cellpadding="50px" cellspacing="12px">
+                    <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="formData._id" required></td></tr>
+                    <tr><td class="newActivity"><label>Name</label></td><td><input class="form-control" ng-model="formData.name" required></td></tr>
+                    <tr><td class="newActivity"><label>EMail</label></td><td><input class="form-control" ng-model="formData.email" required></td></tr>
+                </table>
+                </div>
+            </form>
+     
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="createUser(formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Actor</button>
+          </div>
+        </div>
+      </div>
+    </div -->
+   <!-- end -->    
+    
+ 
+   
+   <!-- Modal -->
+    <div class="modal fade" id="addResource" tabindex="-1" role="dialog" aria-labelledby="addResourceLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="updateActorLabel">Add Document</h4>
+          </div>
+          <div class="modal-body">
+         <div ng-hide="!addResourceError" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> There was a problem adding the resource. Please try again.
+         </div>
+
+            <table>
+                   <tr>
+                     <td>
+                       <form name="formData" class="navbar-form navbar-left" role="addResource" ng-model="formData"  novalidate>
+                            <div class="form-group">
+                               <table  cellpadding="50px" cellspacing="12px">
+                                   <tr><td class="newActivity"><label>Description</label></td><td><input class="form-control" ng-model="formData.description" required></td></tr>
+                                   <!-- tr><td class="newActivity"><label>Product</label></td><td><input class="form-control" ng-model="formData.target" required></td></tr -->
+                                   <tr><td class="newActivity"><label>Product</label></td>
+                                        <td>
+                                            <select  ng-model="formData.target">
+                                                <option ng-repeat="product in allproducts" value="{{product._id}}">{{product.name}}</option>    
+                                            </select>
+
+
+                                        </td>
+                                    </tr>
+                               </table>
+                            </div>
+                            <hr>
+                            <div class="alert alert-warning alert">
+                                <strong>Important!</strong> <small><b><i>Please do not upload documents with sensitive information</i></b></small>
+                            </div>
+                            <div>
+                               <!-- input type="file" ng-file-select="onFileSelect($files)" --> 
+                               <input type="file"  id="file" name ='file' class="form-control"  ng-model="formData.fname" ng-click="resetFileArray()" ng-file-select="onFileSelect($files)" required> 
+                                   
+                               
+                             
+                           </div>
+                           <div ng-model ="showProgressBar" ng-show="showProgressBar" class="progress progress-striped active">
+                             
+                                <div class="progress-bar"  role="progressbar" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100" >
+                                  
+                                </div>
+                            </div>
+                           
+                       </form>
+                     </td>
+                     <td>
+                         
+                         
+                     </td>
+                   </tr>    
+               </table>                  
+              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="addResource($files, formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Resource</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- end -->    
+    
+   
+   
+   
+    <div class="panel-body" ng-show="!showNewActor">
+        <table class="table table-striped">
+            <tr ng-repeat="resource in resources">
+                <td><a href="resource/{{resource._id}}">{{resource._id}}</a></td>
+                <td>{{resource.description}}</td>
+                <td>{{resource.type}}</td>
+                <td>{{resource.size}}</td>
+                <td>
+                    
+                       <a href="" ng-click="removeFile(resource.product,resource._id, $index)"><span class="glyphicon glyphicon-remove" style="align:right"></span></a> 
+              
+                    <!--form name='resourceData' ng-submit='removeFile(resourceData)'>
+                        <span  ng-model='resourceData.fName' ng-init='{{resource._id}}'></span>
+                        <button type='submit'>Remove</button>
+                    </form-->    
+                    
+                </td>
+            </tr>    
+        </table>    
+    </div >
+
+
+
+
+
+</div>
+    <!-- div class="panel panel-default">
+     
+      <div class="panel-heading">Insurance Score Service engineering team</div>
+ 
+      <table class="table">
+          <tr ng-repeat="user in users"> 
+                <td>
+                    <table>
+                        <tr>
+                            <td><img src="/api/users/avatar/{{user._id}}" style="width:60px;height:60px" ng-model="avatar" /></td>
+                            <div ng-show="showUsers">
+                                <td style="padding-left:10px">
+                                    <address>
+                                        <strong>{{user.name}} </strong>&nbsp;<small><a href="/#/users/edit/{{user._id}}">Edit</a></small><br> 
+                                        <small><a href="mailto:{{user.email}}">{{user.email}}&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span></a> </small>
+                                    </address> 
+                                </td></tr>   
+                            <div>
+                         </table>
+
+          </tr> 
+      </table>
+    </div>        
+   
+</div -->
+
+<!--div class="panel panel-default" ng-show="showNewActor">
+<div class="container-fluid">
+  <div class="row-fluid">
+      <div class="offset1 span8 pull-left" ng-repeat="user in users">
+          
+          <div class="panel panel-default"> 
+                <div class="panel-heading"> 
+                    <strong>{{user._id}}</strong>
+                    <a href="" ng-click="editUser(user._id)" data-toggle="modal" data-target="#updateActor"><span class="glyphicon glyphicon-edit" style="align:right"></span></a> 
+                    <a href=""><span class="glyphicon glyphicon-trash" style="align:right"></span></a> 
+                </div>
+              <table style="padding:3px">
+                  <tr><td><div style="margin-top:2px;box-shadow: 3px 3px 3px #888888;height:60px; width:60px">
+                          
+                           <img src="img/users/{{user.imagename}}?v={{randomNum}}"  style="width:60px;height:60px"  />
+                          </div></td>
+                      <td>
+                            <address style="margin-top:2px; margin-bottom:25px; margin-left:8px">
+                                <strong>{{user.name}} </strong> 
+                                <small><a href="mailto:{{user.email}}">{{user.email}}</a> </small>
+                            </address> 
+                      </td>
+                  </tr>
+                      
+              </table>    
+             </div>
+    </div>
+  </div>
+</div>    
+</div -->
+<!--
+<div  flow-init="{target:'/api/users/upload'}" ng-file-success="fileUploadedAndFormSubmitted($file, $message)" flow-name='uploader.flow'>
+ I have uploaded files: #{{$flow.files.length}}
+  <form name="formData">   
+  <input ng-Model="username" type="text"/>
+       
+ <button flow-btn>Add Files</button>
+ <button ng-click="upload()">Upload</button>
+ <img flow-img="uploader.flow.files[uploader.flow.files.length -1]"  style="width:60px;height:60px;line-height: 20px;margin-bottom: 5px"  />
+    </form>
+ <div ng-repeat="file in uploader.flow.files" >
+          {{file.name}} <a ng-click="file.cancel()">X</a>
+        </div>
+        Total files #{{uploader.flow.files.length}}
+       --> 
+ <!-- input type="file" flow-btn/ -->
+ <!--
+ [ {{obj.flow.files[$flow.files.length -1].size}} ]
+
+<table>
+  <tr ng-repeat="file in $flow.files">
+    <td>{{$index+1}}</td>
+    <td>{{file.name}}</td>
+ </tr>  
+ </table>
+ <a class="btn btn-small btn-success" ng-click="$flow.upload()">Upload</a> 
+  <span class="label label-info">Size: {{$flow.getSize()}}</span>
+ <span class="label label-info">Is Uploading: {{$flow.isUploading()}}</span>
+ 
+</div>
+-->
+
+<!-- div class="panel panel-default">
+    <div class="panel-heading">Users
+      
+    <span ng-repeat="activitycount in activitycounts" class="badge"> {{activitycount._id}} {{activitycount.type}}</span></div>
+    <div class="panel-body">
+        
+        <form name="aformData"  class="navbar-form navbar-left" role="addUser" ng-model="aformData" ng-submit="addUser($aformData.$valid)" novalidate>
+              
+            <div class="form-group" >
+                <table  cellpadding="50px" cellspacing="12px">
+                    <tr><td class="newUser"><label>User ID</label></td><td><input class="form-control" ng-model="aformData._id" required></td></tr>
+                    <tr><td class="newUser"><label>User Name</la/bel></td><td><input class="form-control" ng-model="aformData.name" required></td></tr -->
+                    <!-- tr><td><img src="{{avatarImage}}" style="width:60px;height:60px"  /> </td><td> Change Avatar   <input ng-model='file' type="file"/> </td></tr -->
+                    <!-- tr flow-init ng-flow-name="CC"><td><img flow-img="$flow.files[$flow.files.length -1]"  style="width:60px;height:60px;line-height: 20px;margin-bottom: 5px"  /> </td><td> <input type="file" name="choose avatar" ng-model="aformData.thumbnail" flow-btn /> {{$flow.files[0].name}}</td></tr>
+                </table>
+                <br/><button type="submit" class="btn btn-primary btn-sm" ng-disabled="aformData.$invalid" ><span class="glyphicon glyphicon-plus"></span>&nbsp;Add User</button>
+            </div>
+        </form>
+       
+    </div>
+{{debugger}}
+
+<div flow-init ng-file-success="fileUploaded($file, $message)" ng-flow-name="CC">
+     <input type="file" flow-btn /> <img style="width:100px;height:100px" flow-img="$flow.files[$flow.files.length -1]" />
+      <a class="btn btn-small btn-success" ng-click="$flow.upload()">Upload</a>
+      <span class="label label-info">Size: {{$flow.getSize()}}</span>
+    <span class="label label-info">Is Uploading: {{$flow.isUploading()}}</span>
+</div -->
+<!-- div ng-repeat="user in users"> {{user.name}} <img src="/api/users/avatar/{{user._id}}" /></div>
+
+    <div flow-init="{target:'/img'}">
+       <input type="file" flow-btn /> <img style="width:100px;height:100px" flow-img="$flow.files[$flow.files.length -1]" />
+     
+       <table>
+        <tr ng-repeat="file in $flow.files">
+            <td>{{$flow.files.length}}</td>
+            <td>{{$flow.files[$flow.files.length -1].name}}</td>
+        </tr>
+       </table>
+    </div -->
+
+
+
+
+
+

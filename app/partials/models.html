@@ -1,0 +1,88 @@
+
+<div class="panel panel-default">
+    <label class="lead">Models</label>
+
+   <!--   begin -->
+   <!-- Button trigger modal -->
+    <div class="panel panel-default">
+       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newModel">
+          New Model
+        </button>
+        &nbsp;&nbsp;Search&nbsp;&nbsp;<input type="text" ng-model="modelFilter" placeholder="Search Filter"/>&nbsp;<i style="font-size:11px">Search for any text or tags in the model</i>
+
+    </div>
+
+   <!-- Modal -->
+    <div class="modal fade" id="newModel" tabindex="-1" role="dialog" aria-labelledby="newModelLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="newProductLabel">Add Model</h4>
+          </div>
+          <div class="modal-body" style="width:100%">
+         <div ng-hide="!addModelError" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> There was a problem adding new model. Please try again.
+         </div>
+            <form name="formData" class="navbar-form " role="addModel" ng-model="formData"  novalidate>
+                <div class="form-group" style="width:100%">
+                <table  cellpadding="50px" cellspacing="12px" style="width:100%">
+                    <tr><td class="newActivity" style="width:45%" colspan="2"><label><h3>Model Details</h3></label></td></tr>
+                    <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="formData._id" required></td></tr>
+                    <tr><td class="newActivity"><label>Description</label></td><td><input class="form-control" ng-model="formData.description" required></td></tr>
+                    <tr><td class="newActivity"><label>Classification</label></td><td>
+                            <input class="form-control" type="radio" ng-model="formData.classification" value="Non-FCRA" selected required>Non-FCRA
+                            <input class="form-control" type="radio" ng-model="formData.classification" value="FCRA" required>FCRA
+                    </td></tr>
+                    <tr><td class="newActivity"><label>Type</label></td><td>
+                            <input class="form-control" type="radio" ng-model="formData.type" value="Scoring" selected required>Scoring
+                            <input class="form-control" type="radio" ng-model="formData.type" value="Attribute" required>Attribute
+                    </td></tr>
+                    <tr><td class="newActivity"><label>Product</label></td>
+                        <td>
+                            <select  ng-model="formData.product">
+                                <option ng-repeat="product in allproducts" value="{{product._id}}">{{product.name}}</option>    
+                            </select>
+
+                            
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </form>              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="createModel(formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Model</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- end -->
+            
+<!-- begin -->
+  
+
+<div class="container-fluid">
+  <div class="row-fluid animation" ng-repeat="model in models | filter:modelFilter">
+      <div class="col-xs-12 col-md-4 ">
+
+        <div ng-class="{ 'Non-FCRA': 'panel panel-info', 'FCRA':'panel panel-danger'}[model.classification]" style='height:100px'>
+            <div class="panel-heading">
+                <h3 class="panel-title">{{model._id}} <small style='vertical-align:super'>[{{model.classification}}]</small>&nbsp;&nbsp;<a href='#/models/find/{{model._id}}'><span class="glyphicon glyphicon-search" </span> </a></h3> 
+            </div>
+            <div class="panel-body">
+                <small>{{model.description}}</small>
+            </div>
+        </div>   
+      </div>     
+    </div>
+  </div>
+  <!-- end -->
+   
+   
+   
+   
+   
+</div>       

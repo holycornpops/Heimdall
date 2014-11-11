@@ -1,0 +1,59 @@
+
+<div class="panel panel-default">
+    <label class="lead">Model Information</label>
+    <!--   begin model section form -->
+    <form editable-form name="formData" class="navbar-form " role="editModel" ng-model="model" onaftersave="updateModel(model)"    novalidate>
+        <div class="form-group" style="width:100%">
+            <div>
+                <label class="title">Model ID: </label>
+                <span>{{ model._id|| 'required' }}</span>
+            </div>  
+            <div>
+                <label class="title">Description: </label>
+                <span editable-text="model.description" onbeforesave="" e-required>{{ model.description || 'required' }}</span>
+            </div>  
+            <div>
+                <label class="title">Classification: </label>
+                 <span href="#" editable-select="model.classification" e-ng-options="s.value as s.text for s in classification" e-required>
+                    {{model.classification }}
+                </span>
+            </div>  
+            <div>
+                <label class="title">Type: </label>
+                <span href="#" editable-select="model.type" e-ng-options="s.value as s.text for s in modeltype" e-required>
+                    {{model.type }}
+                </span>
+ 
+            </div>  
+            <div>
+                <label class="title">Product: </label>
+                <span href="#" editable-select="model.product" e-ng-options="s._id as s.name for s in allproducts" e-required>
+                    {{model.product }}
+                </span>
+
+            </div>  
+
+            <span ng-show="formData.$visible">
+                <button type="submit" class="btn btn-primary" ng-disabled="formData.$waiting">Save</button>
+                <button type="button" class="btn btn-default" ng-disabled="formData.$waiting" ng-click="formData.$cancel()">Cancel</button>
+            </span>   
+            <div>
+                <button type="button" class="btn btn-default" ng-click="formData.$show()" ng-show="!formData.$visible">Edit</button>
+            </div>    
+
+        </div>
+    </form>     
+    <!--   end product section form -->
+
+   
+    <!-- begin resource section-->
+    <hr/>
+    <label class="lead">Resources</label>
+
+    <!-- resources end -->
+
+
+
+   
+   
+</div>       

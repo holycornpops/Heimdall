@@ -1,0 +1,144 @@
+
+<table border ="0" style="width:95%; margin-left:auto; margin-right:auto">
+    <tr>
+        <td style="vertical-align:top;width:50%">
+            <label class="lead">Latest diary entries</label><hr/>
+            <div ng-repeat="journal in journals">
+                <h4>{{journal.title}}<br/><small>&nbsp;&nbsp;Posted on {{journal.createdDate | date:'EEEE, MMM d, yyyy h:mm a'}}</small></h4>
+                <div class = 'panel' ng-bind-html='getDivText(journal.body,journal._id)' style='font-size:14px;'>
+                            </div>
+                <hr/>
+            </div>
+        </td>
+        
+        <td style="vertical-align:top">
+            <label class="lead">Statistics</label><hr/>
+            <table border ='1'>
+                <tr>
+                    <td> <div id="activitystatusdiv"></div> </td>
+                    <td> <div id="activitytypediv"></div>  </td>
+                </tr>
+            </table>    
+        </td>
+        <!-- td style="vertical-align:top">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading"><h5><strong>Last Five Activities</strong></h5> </div>
+            
+                <div class="list-group" ng-repeat="activity in activities">
+  
+                    
+                    <a href="#/activities/find/{{activity._id}}" class="list-group-item">    
+                    <span ng-show="isDateDue(activity.targetDate) && activity.status != 'CLOSED'" class="badge alert-danger" >Due!</span>
+                        <span ng-show="activity.status === 'CLOSED'" class="badge " style="font-size:12px">Closed</span> 
+                        <span ng-show="activity.type === 'Bug'" class="badge alert-danger" style="font-size:12px">Bug</span> 
+                        <span ng-show="activity.type === 'Task'" class="badge alert-warning" style="font-size:12px">Task</span> 
+                        <span ng-show="activity.type === 'Feature'" class="badge alert-info" style="font-size:12px">Feature</span> 
+                        <span ng-show="activity.status === 'NEW'" class="badge alert-success" style="font-size:12px">New!</span> 
+                        <strong>{{activity.activityName}}</strong></a>
+                </div>
+            </div>            
+        </td>
+        
+        <td style="vertical-align:top">
+            <div class="panel panel-default" >
+                <div class="panel-heading"><h5><strong>Activity Counts</strong></h5> </div>
+                    <ul class="list-group" ng-repeat="activitycount in activitycounts">
+                        <li class="list-group-item">
+                            <strong>{{activitycount._id}}</strong> <span class="badge">{{activitycount.type}}</span>
+                          
+                        </li>
+                    </ul>
+            </div>            
+        </td -->
+    </tr>
+    
+</table>
+
+<!-- div class="panel panel-default">
+    <div class="panel-heading"><h3><strong>Insurance Score Service News</strong> </div>
+      
+    <div class="panel-body" ng-show="showNewActor">
+        <form name="formData" class="navbar-form navbar-left" role="addUser" ng-model="formData" ng-submit="createUser(formData.$valid)" novalidate>
+            <div class="form-group">
+            <table  cellpadding="50px" cellspacing="12px">
+                <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="formData._id" required></td></tr>
+                <tr><td class="newActivity"><label>Name</label></td><td><input class="form-control" ng-model="formData.name" required></td></tr>
+                <tr><td class="newActivity"><label>EMail</label></td><td><input class="form-control" ng-model="formData.email" required></td></tr>
+            </table><br/>
+            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="formData.$invalid" ><span class="glyphicon glyphicon-plus"></span>&nbsp;Add New Actor</button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="panel-body" ng-show="!showNewActor">
+        <table>
+            <tr>
+              <td>
+                <form name="editData" class="navbar-form navbar-left" role="updateUser" ng-model="editData" ng-submit="updateUser(edita.$valid)" novalidate>
+                    <div class="form-group">
+                        <table  cellpadding="50px" cellspacing="12px">
+                            <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="editData._id" ng-readonly="{{true}}" required /></td></tr>
+                            <tr><td class="newActivity"><label>Name</label></td><td><input class="form-control" ng-model="editData.name" required></td></tr>
+                            <tr><td class="newActivity"><label>EMail</label></td><td><input class="form-control" ng-model="editData.email" required></td></tr>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-sm" ng-disabled="editData.$invalid" ><span class="glyphicon glyphicon-save"></span>&nbsp;Update Actor</button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="closeUpdate(editData)"> <span class="glyphicon glyphicon-cancel"></span>&nbsp;Cancel</button>
+                    </div>
+                </form>
+              </td>
+              <td>
+                <div flow-init="{target:'/api/users/upload'}" flow-name='uploader.flow' flow-complete="flowComplete()">  
+                    <img flow-img="uploader.flow.files[uploader.flow.files.length -1]"  src="img/users/{{editData.imagename}}" style="width:150px;height:150px"  />
+                     <button class="btn btn-primary btn-sm" flow-btn>Select image</button>
+                     <button  class="btn btn-primary btn-sm" ng-click="upload()">change</button>
+                     <br/><span class="label label-info">Filename: {{uploader.flow.files[uploader.flow.files.length -1].file.name}}</span>
+                     <br/><span class="label label-info">Size: {{$flow.getSize()}}</span>
+                </div>                    
+              </td>
+            </tr>    
+        </table>    
+    </div>
+
+
+
+
+
+</div>
+ <div class="panel panel-default" ng-show="showNewActor">
+<div class="container-fluid">
+  <div class="row-fluid">
+      <div class="offset1 span8 pull-left" ng-repeat="user in users">
+          
+          <div class="panel panel-default"> 
+                <div class="panel-heading"> 
+                    <strong>{{user._id}}</strong>
+                    <a href="" ng-click="editUser(user._id)"><span class="glyphicon glyphicon-edit" style="align:right"></span></a> 
+                    <a href=""><span class="glyphicon glyphicon-trash" style="align:right"></span></a> 
+                </div>
+              <table style="padding:3px">
+                  <tr><td><div style="margin-top:2px;box-shadow: 3px 3px 3px #888888;height:60px; width:60px">
+                           <img src="img/users/{{user.imagename}}?v={{randomNum}}"  style="width:60px;height:60px"  />
+                          </div></td>
+                      <td>
+                            <address style="margin-top:2px; margin-bottom:25px; margin-left:8px">
+                                <strong>{{user.name}} </strong> 
+                                <small><a href="mailto:{{user.email}}">{{user.email}}</a> </small>
+                            </address> 
+                      </td>
+                  </tr>
+                      
+              </table>    
+             </div>
+    </div>
+  </div>
+</div>    
+</div -->
+
+
+
+
+
+

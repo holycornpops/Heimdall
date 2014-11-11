@@ -1,0 +1,86 @@
+
+<div class="panel panel-default">
+    <label class="lead">Products</label>
+
+   <!--   begin -->
+   <!-- Button trigger modal -->
+    <div class="panel panel-default">
+       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newProduct">
+          New Product
+        </button>
+        &nbsp;&nbsp;Search&nbsp;&nbsp;<input type="text" ng-model="prodFilter" placeholder="Search Filter"/>&nbsp;<i style="font-size:11px">Search for any text or tags in the product</i>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="newProduct" tabindex="-1" role="dialog" aria-labelledby="newProductLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="newProductLabel">Add ISS Project</h4>
+          </div>
+          <div class="modal-body" style="width:100%">
+         <div ng-hide="!addProductError" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Warning!</strong> There was a problem adding new product. Please try again.
+         </div>
+            <form name="formData" class="navbar-form " role="addUser" ng-model="formData"  novalidate>
+                <div class="form-group" style="width:100%">
+                <table  cellpadding="50px" cellspacing="12px" style="width:100%">
+                    <tr><td class="newActivity" style="width:45%" colspan="2"><label><h3>Project Details</h3></label></td></tr>
+                    <tr><td class="newActivity"><label>ID</label></td><td><input class="form-control" ng-model="formData._id" required></td></tr>
+                    <tr><td class="newActivity"><label>Name</label></td><td><input class="form-control" ng-model="formData.name" required></td></tr>
+                    <tr><td class="newActivity"><label>Description</label></td><td><input class="form-control" ng-model="formData.description" required></td></tr>
+                    <tr><td class="newActivity"><label>Type</label></td><td>
+                            <input class="form-control" type="radio" ng-model="formData.projectType" value="Non-FCRA" selected required>Non-FCRA
+                            <input class="form-control" type="radio" ng-model="formData.projectType" value="FCRA" required>FCRA
+                            <input class="form-control" type="radio" ng-model="formData.projectType" value="ISS Design" required>ISS Design
+                    </td></tr>
+                    <tr><td class="newActivity"><label>Tags</label></td><td><input class="form-control" ng-model="formData.tags" required></td></tr>
+                    <!--tr><td class="newActivity"><label>Project Manager</label></td><td><input class="form-control" ng-model="formData.projectManager" required></td></tr>
+                    <tr><td class="newActivity"><label>Product Manager</label></td><td><input class="form-control" ng-model="formData.productManager" required></td></tr>
+                    <tr><td class="newActivity"><label>Technical Lead</label></td><td><input class="form-control" ng-model="formData.technicalLead" required></td></tr>
+                    <tr><td class="newActivity"><label>QA Lead</label></td><td><input class="form-control" ng-model="formData.qaLead" required></td></tr>
+                    <tr><td class="newActivity"  colspan="2"><hr/></td></tr>
+                    <tr><td class="newActivity" style="width:45%" colspan="2"><label><h4>Actors<small>&nbsp;&nbsp;Click on an actor to assign to this product</small></h4></label></td></tr -->
+                </table>
+                </div>
+            </form>              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="formData.$invalid" ng-click="createProduct(formData.$valid)" ><span class="glyphicon glyphicon-plus"></span>Save Product</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- end -->
+            
+
+  <!-- begin -->
+  
+
+
+<div class="container-fluid">
+  <div class="row-fluid animation" ng-repeat="product in products  | filter:prodFilter">
+      <!-- div class="offset1 span3 " -->
+      <div class="col-xs-12 col-md-4 sample-show-hide">
+
+        <div ng-class="{ 'Non-FCRA': 'panel panel-info', 'FCRA':'panel panel-danger', 'ISS Design':'panel panel-success'}[product.projectType] " style="width:400px;margin-left:50x">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{product.name}} <small>[{{product.projectType}}]</small>&nbsp;&nbsp;<a href='#/products/find/{{product._id}}'><span class="glyphicon glyphicon-search" </span> </a></h3> 
+            </div>
+            <div class="panel-body">
+                <small>{{product.description}}</small>
+            </div>
+        </div>   
+      </div>     
+    </div>
+  </div>
+  <!-- end -->
+   
+   
+   
+   
+   
+</div>       
